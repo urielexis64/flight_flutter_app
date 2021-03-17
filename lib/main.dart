@@ -1,3 +1,5 @@
+import 'package:flight_app/choice_chip.dart';
+import 'package:flight_app/city_card.dart';
 import 'package:flight_app/constants.dart';
 import 'package:flight_app/custom_shape_clipper.dart';
 import 'package:flight_app/data.dart';
@@ -23,7 +25,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [HomeScreenTop()],
+        children: [HomeScreenTop(), homeScreenBottom],
       ),
     );
   }
@@ -48,7 +50,7 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
         ClipPath(
           clipper: CustomShapeClipper(),
           child: Container(
-            height: size.height * 0.55,
+            height: size.height * 0.5,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [Constants.primaryColor, Constants.secondaryColor]),
@@ -113,7 +115,7 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: size.height * .05,
                   ),
                   Text(
                     'Where would\nyou want to go?',
@@ -121,7 +123,7 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 30,
+                    height: size.height * .03,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.0),
@@ -158,16 +160,15 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InkWell(
-                        onTap: () {
-                          setState(() {
-                            isFlightSelected = true;
-                          });
-                        },
-                        child: ChoiceChip(
-                            icon: Icons.flight_takeoff_rounded,
-                            text: 'Flights',
-                            isSelected: isFlightSelected),
-                      ),
+                          onTap: () {
+                            setState(() {
+                              isFlightSelected = true;
+                            });
+                          },
+                          child: CustomChoiceChip(
+                              icon: Icons.flight_takeoff_rounded,
+                              text: 'Flights',
+                              isSelected: isFlightSelected)),
                       SizedBox(
                         width: 20,
                       ),
@@ -177,7 +178,7 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                             isFlightSelected = false;
                           });
                         },
-                        child: ChoiceChip(
+                        child: CustomChoiceChip(
                             icon: Icons.hotel,
                             text: 'Hotels',
                             isSelected: !isFlightSelected),
@@ -194,48 +195,30 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
   }
 }
 
-class ChoiceChip extends StatefulWidget {
-  final IconData icon;
-  final String text;
-  final bool isSelected;
-
-  ChoiceChip({this.icon, this.text, this.isSelected});
-
-  @override
-  _ChoiceChipState createState() => _ChoiceChipState();
-}
-
-class _ChoiceChipState extends State<ChoiceChip> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: Constants.smallPadding,
-          horizontal: Constants.defaultPadding),
-      decoration: widget.isSelected
-          ? BoxDecoration(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(Constants.bigRadius)),
-              color: Constants.lightColor.withOpacity(0.15))
-          : null,
-      child: Row(
-        // mainAxisSize: MainAxisSize.min,
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(
-            widget.icon,
-            size: 20,
-            color: Constants.lightColor,
+final homeScreenBottom = Container(
+    padding: EdgeInsets.all(Constants.defaultPadding),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Currently watched items',
+              style: TextStyle(fontSize: 14),
+            ),
+            Text(
+              'VIEW ALL(20)',
+              style: Constants.viewAllStyle,
+            ),
+          ],
+        ),
+        Container(
+          height: 220,
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            children: [...cityCards],
           ),
-          SizedBox(
-            width: 4,
-          ),
-          Text(
-            widget.text,
-            style: TextStyle(fontSize: 14, color: Constants.lightColor),
-          )
-        ],
-      ),
-    );
-  }
-}
+        )
+      ],
+    ));
