@@ -23,4 +23,7 @@ class Constants {
       TextStyle(color: lightColor, fontSize: 16);
   static final TextStyle dropDownMenuItemStyle =
       TextStyle(color: darkColor, fontSize: 18);
+  static final viewAllStyle = TextStyle(fontSize: 14, color: primaryColor);
+  static final smallTitleStyle =
+      TextStyle(fontSize: 14, color: lightColor, fontWeight: FontWeight.bold);
 }
