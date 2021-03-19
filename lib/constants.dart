@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  static final ThemeData themeData = ThemeData(
+      accentColor: darkColor,
+      primaryColor: primaryColor,
+      primaryColorLight: primaryLightColor,
+      primaryColorDark: darkColor,
+      buttonColor: primaryLightColor,
+      fontFamily: 'Poppins',
+      secondaryHeaderColor: secondaryColor);
+
   static final Color primaryColor = Colors.orangeAccent;
   static final Color primaryLightColor = Colors.orangeAccent.shade100;
   static final Color accentColor = Colors.white;
